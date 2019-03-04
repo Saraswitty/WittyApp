@@ -1,8 +1,8 @@
 package com.wittyapp
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -14,16 +14,14 @@ import com.facebook.login.LoginResult
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-
     private var callbackManager: CallbackManager? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var btnLoginFacebook = findViewById<Button>(R.id.btnLoginFacebook)
+        val btnLoginFacebook = findViewById<Button>(R.id.btnLoginFacebook)
 
-        btnLoginFacebook.setOnClickListener(View.OnClickListener {
+        btnLoginFacebook.setOnClickListener({
             // Login
             callbackManager = CallbackManager.Factory.create()
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"))
@@ -31,7 +29,8 @@ class MainActivity : AppCompatActivity() {
                     object : FacebookCallback<LoginResult> {
                         override fun onSuccess(loginResult: LoginResult) {
                             Log.d("MainActivity", "Facebook token: " + loginResult.accessToken.token)
-                            startActivity(Intent(applicationContext, AuthenticatedActivity::class.java))
+                            val intent = Intent(applicationContext, AuthenticatedActivity::class.java)
+                            startActivity(intent)
                         }
 
                         override fun onCancel() {
