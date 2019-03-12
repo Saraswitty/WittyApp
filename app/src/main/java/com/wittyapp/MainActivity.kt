@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
         val btnLoginFacebook = findViewById<Button>(R.id.btnLoginFacebook)
 
         btnLoginFacebook.setOnClickListener({
-            // Login
             callbackManager = CallbackManager.Factory.create()
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"))
             LoginManager.getInstance().registerCallback(callbackManager,

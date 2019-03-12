@@ -17,7 +17,9 @@ class AuthenticatedActivity : AppCompatActivity() {
 
         setContentView(R.layout.authenticated_activity)
 
+        // Get the current fb access token
         val accessToken = AccessToken.getCurrentAccessToken()
+
         val request = GraphRequest.newMeRequest(
                 accessToken
         ) { `object`, response ->
