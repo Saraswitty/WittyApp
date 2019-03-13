@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">WittyApp</string>
     <string name="facebook_app_id">2329282933971164</string>
+    <string name="log_in_with_facebook">Log in with Facebook</string>
 </resources>

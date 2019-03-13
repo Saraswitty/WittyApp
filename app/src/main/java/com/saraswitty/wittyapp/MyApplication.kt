@@ -1,4 +1,4 @@
-package com.wittyapp
+package com.saraswitty.wittyapp
 
 import android.app.Application
 import com.facebook.FacebookSdk

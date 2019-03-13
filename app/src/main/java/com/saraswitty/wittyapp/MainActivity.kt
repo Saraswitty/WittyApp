@@ -1,10 +1,9 @@
-package com.wittyapp
+package com.saraswitty.wittyapp
 
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -21,8 +20,11 @@ class MainActivity : AppCompatActivity() {
 
         val btnLoginFacebook = findViewById<Button>(R.id.btnLoginFacebook)
 
+        // Add FB callback to login button
         btnLoginFacebook.setOnClickListener({
             callbackManager = CallbackManager.Factory.create()
+
+            // List of user information that are requested
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "email"))
             LoginManager.getInstance().registerCallback(callbackManager,
                     object : FacebookCallback<LoginResult> {
@@ -45,9 +47,10 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    // TODO Understand what this part of the code does and comment the same
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        callbackManager?.onActivityResult(requestCode, resultCode, data)
+        callbackManager!!.onActivityResult(requestCode, resultCode, data)
     }
 }

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wittyapp.MainActivity">
+    tools:context="com.saraswitty.wittyapp.MainActivity">
 
     <Button
         android:id="@+id/btnLoginFacebook"
@@ -12,7 +12,7 @@
         android:layout_centerInParent="true"
         android:layout_margin="20dp"
         android:background="#3c66c4"
-        android:text="Log in with Facebook"
+        android:text="@string/log_in_with_facebook"
         android:textAllCaps="false"
         android:textColor="@android:color/white" />
 

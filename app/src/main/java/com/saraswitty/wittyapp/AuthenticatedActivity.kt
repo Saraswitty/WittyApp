@@ -1,4 +1,4 @@
-package com.wittyapp
+package com.saraswitty.wittyapp
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -28,12 +28,15 @@ class AuthenticatedActivity : AppCompatActivity() {
         }
 
         val parameters = Bundle()
+
+        // Values that are requested
         parameters.putString("fields", "id, name, email")
         request.parameters = parameters
         request.executeAsync()
 
         val btnLogout = findViewById<Button>(R.id.btnLogout)
 
+        // Logout button functionality
         btnLogout.setOnClickListener(View.OnClickListener {
             if (AccessToken.getCurrentAccessToken() != null) {
                 GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, GraphRequest.Callback {
