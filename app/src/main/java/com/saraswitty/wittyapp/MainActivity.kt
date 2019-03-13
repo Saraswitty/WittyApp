@@ -10,9 +10,11 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import mu.KotlinLogging
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
+    private val logger = KotlinLogging.logger {}
     private var callbackManager: CallbackManager? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,18 +31,18 @@ class MainActivity : AppCompatActivity() {
             LoginManager.getInstance().registerCallback(callbackManager,
                     object : FacebookCallback<LoginResult> {
                         override fun onSuccess(loginResult: LoginResult) {
-                            Log.d("MainActivity", "Facebook token: " + loginResult.accessToken.token)
+                            logger.debug{"Facebook token: " + loginResult.accessToken.token}
                             val intent = Intent(applicationContext, AuthenticatedActivity::class.java)
                             startActivity(intent)
                         }
 
                         override fun onCancel() {
-                            Log.d("MainActivity", "Facebook onCancel.")
+                            logger.error{"Login Cancelled"}
 
                         }
 
                         override fun onError(error: FacebookException) {
-                            Log.d("MainActivity", "Facebook onError.")
+                            logger.error{"Login Failed"}
 
                         }
                     })

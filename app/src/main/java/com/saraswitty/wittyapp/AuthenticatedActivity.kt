@@ -9,9 +9,10 @@ import com.facebook.AccessToken
 import com.facebook.GraphRequest
 import com.facebook.HttpMethod
 import com.facebook.login.LoginManager
+import mu.KotlinLogging
 
 class AuthenticatedActivity : AppCompatActivity() {
-
+    private val logger = KotlinLogging.logger {}
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -32,6 +33,7 @@ class AuthenticatedActivity : AppCompatActivity() {
         // Values that are requested
         parameters.putString("fields", "id, name, email")
         request.parameters = parameters
+        logger.debug{"Sent async request for Facebook information of the user"}
         request.executeAsync()
 
         val btnLogout = findViewById<Button>(R.id.btnLogout)
@@ -39,6 +41,7 @@ class AuthenticatedActivity : AppCompatActivity() {
         // Logout button functionality
         btnLogout.setOnClickListener(View.OnClickListener {
             if (AccessToken.getCurrentAccessToken() != null) {
+                logger.debug{"Facebook logout called"}
                 GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, GraphRequest.Callback {
                     AccessToken.setCurrentAccessToken(null)
                     LoginManager.getInstance().logOut()
