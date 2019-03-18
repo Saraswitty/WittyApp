@@ -1,7 +1,16 @@
 package com.saraswitty.wittyapp
 
+import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.support.v4.app.NotificationCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import com.facebook.AccessToken
@@ -9,17 +18,12 @@ import com.facebook.GraphRequest
 import com.facebook.HttpMethod
 import com.facebook.login.LoginManager
 import mu.KotlinLogging
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
-import android.os.Build
-import android.support.v4.app.NotificationCompat
-import android.view.View
-import android.annotation.SuppressLint
+
 
 // TODO Understand why we need the below line
 @SuppressLint("ByteOrderMark")
 class AuthenticatedActivity : AppCompatActivity() {
+
     private val logger = KotlinLogging.logger {}
     private var notificationManager: NotificationManager? = null
 
@@ -82,9 +86,17 @@ class AuthenticatedActivity : AppCompatActivity() {
     }
 
     // Button onClick function handler
-    fun sendNotification(view: View) {
+    fun sendNotification() {
         val channelID = "com.saraswitty.wittymail.allNotifications"
         val notificationID = 101
+        val resultIntent = Intent(this, NewUpcomingEvent::class.java)
+
+        val pendingIntent = PendingIntent.getActivity(
+                this,
+                0,
+                resultIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
         // Use NotificationCompat instead of Notification for backward compatibility
         val notification = NotificationCompat.Builder(this@AuthenticatedActivity,
@@ -93,6 +105,7 @@ class AuthenticatedActivity : AppCompatActivity() {
                 .setContentText("This is an  example notification.")
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
                 .setChannelId(channelID)
+                .setContentIntent(pendingIntent)
                 .build()
 
         // Send the notification
