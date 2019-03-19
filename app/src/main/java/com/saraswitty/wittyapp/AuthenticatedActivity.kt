@@ -19,7 +19,6 @@ import com.facebook.HttpMethod
 import com.facebook.login.LoginManager
 import mu.KotlinLogging
 
-
 // TODO Understand why we need the below line
 @SuppressLint("ByteOrderMark")
 class AuthenticatedActivity : AppCompatActivity() {
@@ -86,7 +85,7 @@ class AuthenticatedActivity : AppCompatActivity() {
     }
 
     // Button onClick function handler
-    fun sendNotification() {
+    fun sendNotification(view: View) {
         val channelID = "com.saraswitty.wittymail.allNotifications"
         val notificationID = 101
         val resultIntent = Intent(this, NewUpcomingEvent::class.java)
