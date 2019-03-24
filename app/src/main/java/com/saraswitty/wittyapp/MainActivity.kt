@@ -3,13 +3,16 @@ package com.saraswitty.wittyapp
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import mu.KotlinLogging
 import java.util.*
 
@@ -19,6 +22,32 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        FirebaseInstanceId.getInstance().instanceId
+                .addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        logger.error("getInstanceId failed", task.exception)
+                        return@OnCompleteListener
+                    }
+
+                    // Get new Instance ID token
+                    val token = task.result?.token
+
+                    // Log and toast
+                    val msg = "[Firebase] Instance ID token: " + token
+                    logger.info(msg)
+                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                })
+
+        FirebaseMessaging.getInstance().subscribeToTopic("weather")
+                .addOnCompleteListener { task ->
+                    var msg = "Subscribed to topic 'weather'"
+                    if (!task.isSuccessful) {
+                        msg = "Failed to subscribe to topic 'weather'"
+                    }
+                    logger.info("[Firebase] Subscribe to topic 'weather': " + msg)
+                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                }
 
         val btnLoginFacebook = findViewById<Button>(R.id.btnLoginFacebook)
 
