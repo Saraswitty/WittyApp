@@ -8,7 +8,7 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -39,7 +39,8 @@
             android:authorities="com.facebook.app.FacebookContentProvider495608067455933"
             android:exported="true" />
 
-        <activity android:name=".NewUpcomingEvent"></activity>
+        <activity android:name=".NewUpcomingEvent" />
+        <activity android:name=".SnoozeActivity"></activity>
     </application>
 
 </manifest>

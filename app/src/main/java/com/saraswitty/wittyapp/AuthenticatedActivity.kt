@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.NotificationCompat
@@ -97,14 +98,36 @@ class AuthenticatedActivity : AppCompatActivity() {
                 PendingIntent.FLAG_UPDATE_CURRENT
         )
 
+        // Snooze Intent for the snooze button in the notification
+        val snoozeIntent = Intent(this, SnoozeActivity::class.java)
+        val snoozePendingIntent: PendingIntent =
+                PendingIntent.getActivity(this, 1, snoozeIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        // Event Intent for the sign me up button in the notification
+        val checkEventPageIntent = Intent(this, NewUpcomingEvent::class.java)
+        val checkEventPagePendingIntent: PendingIntent =
+                PendingIntent.getActivity(this, 1, checkEventPageIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
         // Use NotificationCompat instead of Notification for backward compatibility
         val notification = NotificationCompat.Builder(this@AuthenticatedActivity,
                 channelID)
-                .setContentTitle("Example Notification")
-                .setContentText("This is an  example notification.")
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setContentTitle("New Event")
+                .setContentText("This is an example event.")
+                .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.sneh_large_icon))
+                .setSmallIcon(R.drawable.sneh_small_icon)
                 .setChannelId(channelID)
                 .setContentIntent(pendingIntent)
+                .addAction(R.drawable.sneh_small_icon, "Sign Me Up",
+                        checkEventPagePendingIntent)
+                .addAction(R.drawable.sneh_small_icon, "Snooze",
+                        snoozePendingIntent)
+                .setAutoCancel(true)
+                .setStyle(NotificationCompat.BigPictureStyle()
+                        .bigPicture(BitmapFactory.decodeResource(resources, R.drawable.sneh_large_icon))
+                        .setBigContentTitle("Hello")
+                        .bigLargeIcon(null))
+                .setStyle(NotificationCompat.BigTextStyle()
+                        .bigText("This is some random loooooooooooooong text"))
                 .build()
 
         // Send the notification
